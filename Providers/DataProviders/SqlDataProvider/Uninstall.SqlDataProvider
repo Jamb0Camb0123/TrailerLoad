@@ -1,0 +1,30 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}HJLeaTrailerLoad_Items]')
+and OBJECTPROPERTY(id, N'IsTable') = 1)
+DROP TABLE {databaseOwner}[{objectQualifier}HJLeaTrailerLoad_Items]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}HJLeaTrailerLoad_GetTasks]') 
+and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}[{objectQualifier}HJLeaTrailerLoad_GetTasks]
+GO
+
+IF EXISTS (select * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}HJLeaTrailerLoad_AddTask]') 
+and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}[{objectQualifier}HJLeaTrailerLoad_AddTask]
+GO

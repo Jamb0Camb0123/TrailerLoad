@@ -1,0 +1,92 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}HJLeaTrailerLoad_Items]') 
+and OBJECTPROPERTY(id, N'IsTable') = 1)
+BEGIN
+
+CREATE TABLE {databaseOwner}[{objectQualifier}HJLeaTrailerLoad_Items](
+    [ld_id] [int] IDENTITY(1,1) NOT NULL,
+    [trlr_id] [nvarchar](10) NULL,
+    [lded_wth] [nvarchar](50) NULL,
+    [lded_dte] [datetime] NULL,
+    [lded_site] [nvarchar](50) NULL,
+    [ModuleID] [int] NOT NULL,
+    [UserID] [int] NOT NULL
+    )
+
+ALTER TABLE {databaseOwner}[{objectQualifier}HJLeaTrailerLoad_Items] ADD CONSTRAINT [PK_{databaseOwner}{objectQualifier}HJLeaTrailerLoad_Items] PRIMARY KEY CLUSTERED  ([ld_id])
+END
+
+GO
+
+/****************** Stored Procedure ************************/
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}HJLeaTrailerLoad_GetTasks]') and 
+OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}HJLeaTrailerLoad_GetTasks
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}HJLeaTrailerLoad_GetTasks
+    @ModuleId int,
+	@trlr_id nvarchar (10)
+AS
+    SELECT TOP (3)
+			  ld_id,
+              trlr_id,
+              lded_wth,
+              lded_dte,
+			  lded_site,
+              ModuleId,
+              UserID
+    FROM {databaseOwner}{objectQualifier}HJLeaTrailerLoad_Items
+    WHERE ModuleID = @ModuleId AND trlr_id = @trlr_id
+	ORDER BY lded_dte desc
+GO
+
+/***************************************************************/
+
+IF EXISTS (select * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}HJLeaTrailerLoad_AddTask]') and
+OBJECTPROPERTY(id, N'IsProcedure') = 1)
+    DROP PROCEDURE {databaseOwner}{objectQualifier}HJLeaTrailerLoad_AddTask
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}HJLeaTrailerLoad_AddTask
+    @trlr_id nvarchar(10),
+    @lded_wth nvarchar(50),
+	@lded_dte datetime,
+    @lded_site nvarchar(50),
+    @ModuleID int,
+    @UserID int
+AS
+    INSERT INTO {databaseOwner}{objectQualifier}HJLeaTrailerLoad_Items(
+        trlr_id,
+        lded_wth,
+        lded_dte,
+		lded_site,
+        ModuleID,
+        UserID
+    )
+    VALUES (
+        @trlr_id,
+        @lded_wth,
+        @lded_dte,
+		@lded_site,
+        @ModuleID,
+        @UserID
+    )
+SELECT @@IDENTITY
+GO

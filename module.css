@@ -1,0 +1,75 @@
+body {
+    font: Helvetica Neue
+}
+
+#addButton{
+    float: right;
+}
+
+.containers {
+    margin: auto;
+    width: 60%;
+}
+
+.formt{
+    margin: auto;
+    width: 20%;
+}
+
+.form1 {
+    width: 70%;
+}
+
+#submit{
+    float: right;
+}
+
+#myInput {
+    padding: 6px 25px;
+    display: inline-block;
+    margin: 4px 2px;
+}
+
+button {
+    background-color: #E7E7E7;
+    border: 0.5px solid black;
+    color: black;
+    padding: 6px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background-color 0.3s ease;
+}
+
+button:hover,
+button:active {
+    background-color: #CCCCCC;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+}
+
+td {
+    text-align: center;
+}
+
+th:nth-child(1),
+th:nth-child(2),
+th:nth-child(3),
+th:nth-child(4) {
+    text-align: center;
+    background-color: #E7E7E7;
+    color: black;
+    font-weight: normal;
+}
